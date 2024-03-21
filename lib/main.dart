@@ -4,7 +4,7 @@ import 'package:hojung/app/odds/custom_light_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hojung/app/routes/app_pages.dart';
-import 'package:hojung/app/view/main_page_view.dart';
+import 'package:hojung/app/view/pages/main_page_view.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

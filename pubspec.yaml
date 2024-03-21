@@ -35,6 +35,12 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
+  get: ^4.6.6
+  intl: ^0.18.1
+  flutter_dotenv: ^5.1.0
+  infinite_scroll_pagination: ^4.0.0
+  http: ^1.2.1
+  flutter_localization: ^0.2.0
 
 dev_dependencies:
   flutter_test:
@@ -58,6 +64,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  assets:
+    - assets/config/.env
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
@@ -86,5 +94,23 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Italic.ttf
+        - asset: assets/fonts/Roboto-Thin.ttf
+        - asset: assets/fonts/Roboto-ThinItalic.ttf
+        - asset: assets/fonts/Roboto-Light.ttf
+        - asset: assets/fonts/Roboto-LightItalic.ttf
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Medium.ttf
+        - asset: assets/fonts/Roboto-MediumItalic.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
+        - asset: assets/fonts/Roboto-BoldItalic.ttf
+        - asset: assets/fonts/Roboto-Black.ttf
+        - asset: assets/fonts/Roboto-BlackItalic.ttf
+    - family: CustomIcons
+      fonts:
+        - asset: assets/icons/CustomIcons.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -14,7 +14,7 @@ class LoggedInUser extends Guest {
 
   @override
   sign(String id, String pwd) async {
-    final String signOutUrl = dotenv.get('API_SIGNOUTURL');
+    final String signOutUrl = dotenv.env['API_SIGNOUTURL']!;
 
     final http.Response response = await http
         .get(Uri.parse(signOutUrl), headers: {'Cookie': cookieString});

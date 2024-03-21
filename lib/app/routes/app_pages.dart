@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hojung/app/view/main_page_view.dart';
+import 'package:hojung/app/view/pages/main_page_view.dart';
 import 'package:hojung/app/view/pages/details_page.dart';
 import 'package:hojung/app/view/pages/register_page.dart';
 import 'package:hojung/app/view/pages/sign_in_page.dart';

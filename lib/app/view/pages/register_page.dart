@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hojung/app/view/widgets/global/custom_appbar.dart';
 import 'package:hojung/app/view/widgets/register_page/register_email_confirm_section.dart';
 import 'package:hojung/app/view/widgets/register_page/register_email_send_section.dart';
-import 'package:hojung/app/view/widgets/register_page/register_id_section.dart';
+import 'package:hojung/app/view/widgets/register_page/register_id_section/register_id_section.dart';
 import 'package:hojung/app/view/widgets/register_page/register_pwd_section.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -12,8 +12,10 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
+
+
+
 class _RegisterPageState extends State<RegisterPage> {
-  TextEditingController idEditingController = TextEditingController();
   TextEditingController pwdEditingController = TextEditingController();
   TextEditingController pwdConfirmEditingController = TextEditingController();
   TextEditingController emailEditingController = TextEditingController();
@@ -49,7 +51,6 @@ class _RegisterPageState extends State<RegisterPage> {
               children: [
                 RegisterIDSection(
                   setIsIDValidated: isIDValidated,
-                  idEditingController: idEditingController,
                   labelPadding: labelPadding,
                   heightOfSizedBoxBetweenLabelAndField:
                       heightOfSizedBoxBetweenLabelAndField,
