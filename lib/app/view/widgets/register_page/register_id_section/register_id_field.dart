@@ -1,10 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class RegisterIDField extends StatelessWidget {
   RegisterIDField({
     super.key,
     required this.formKey,
     required this.validateMessage,
+    required this.validateColor,
     required this.idEditingController,
     required this.isFieldEnabled,
     required this.onChanged,
@@ -14,6 +18,7 @@ class RegisterIDField extends StatelessWidget {
 
   final GlobalKey<FormState> formKey;
   String? validateMessage;
+  Color? validateColor;
   final bool isFieldEnabled;
   final TextEditingController idEditingController;
   final Function onChanged;
@@ -25,21 +30,29 @@ class RegisterIDField extends StatelessWidget {
     return Form(
       key: formKey,
       child: TextFormField(
+        validator: (value) => validateMessage,
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        validator: (value) => validateMessage.toString(),
+        inputFormatters: [
+          FilteringTextInputFormatter(
+            RegExp('[a-z A-Z ㄱ-ㅎ|가-힣|·|：]'),
+            allow: true,
+          ),
+        ],
         enabled: isFieldEnabled,
         controller: idEditingController,
         onChanged: (id) => onChanged(id.length),
         maxLength: maxLength,
         decoration: InputDecoration(
+          errorStyle: Theme.of(context)
+              .textTheme
+              .bodySmall!
+              .copyWith(color: validateColor),
           hintText: '$minLength자리 이상 $maxLength자리 이하 문자',
           hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
               color:
                   Theme.of(context).colorScheme.onBackground.withOpacity(0.5)),
-          errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primary, width: 0.5),
-              borderRadius: BorderRadius.circular(10)),
+          errorBorder:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
           focusedErrorBorder: OutlineInputBorder(
               borderSide: BorderSide(
                   color: Theme.of(context).colorScheme.primary, width: 0.5),

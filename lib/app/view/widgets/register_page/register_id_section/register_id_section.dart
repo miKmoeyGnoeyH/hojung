@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:get/get.dart';
 import 'package:hojung/app/view/widgets/register_page/register_id_section/register_id_check_button.dart';
 import 'package:hojung/app/view/widgets/register_page/register_id_section/register_id_field.dart';
 import 'package:http/http.dart' as http;
@@ -39,7 +40,8 @@ class _RegisterIDSectionState extends State<RegisterIDSection> {
   // 응답 수신 이후 결과 출력
   final TextEditingController idEditingController = TextEditingController();
   final GlobalKey<FormState> _idFieldFormKey = GlobalKey<FormState>();
-  String? validateMessage;
+  String? idValidateMessage;
+  Color? idValidateMSGColor;
   bool isIDFieldEnabled = true;
   bool isIDCheckButtonEnabled = false;
   int minIDLength = 2;
@@ -51,29 +53,43 @@ class _RegisterIDSectionState extends State<RegisterIDSection> {
       isIDCheckButtonEnabled = false;
     });
 
+    // TODO
+    // 한글을 입력받으면 자음, 모음이 따로 입력되어 있는 것은 없는지 확인해야 함
+
+    String? tempValidateMessage;
+
     try {
       http.Response response = await http.post(
         Uri.parse('http://192.168.1.18:8080/usercheck'),
         body: jsonEncode({'username': idEditingController.text}),
-      ).timeout(const Duration(seconds: 10));
+      ).timeout(const Duration(seconds: 3));
 
       if(response.statusCode == 200) {
         widget.setIsIDValidated(true);
-        validateMessage = '사용 가능한 ID입니다.';
+        tempValidateMessage = '사용 가능한 ID입니다.';
+        idValidateMSGColor = Colors.blueAccent;
       }
       else if(response.statusCode == 400) {
         widget.setIsIDValidated(false);
-        validateMessage = '사용 중인 ID입니다.';
+        tempValidateMessage = '사용 중인 ID입니다.';
+        idValidateMSGColor = Colors.red;
       }
     } on Exception {
-      validateMessage = '인터넷 연결 상태를 확인해주세요.';
+      widget.setIsIDValidated(false);
+      tempValidateMessage = '인터넷 연결 상태를 확인해주세요.';
+      idValidateMSGColor = Colors.red;
+      setState(() {
+        isIDCheckButtonEnabled = true;
+      });
     }
 
     setState(() {
+      idValidateMessage = tempValidateMessage;
       isIDFieldEnabled = true;
     });
 
-    _idFieldFormKey.currentState!.validate();
+    log(idValidateMessage.toString());
+    // _idFieldFormKey.currentState!.validate();
   }
 
   void enableIDCheckButton(int length) {
@@ -86,8 +102,15 @@ class _RegisterIDSectionState extends State<RegisterIDSection> {
     } else {
       setState(() {
         isIDCheckButtonEnabled = true;
+        idValidateMessage = '';
       });
     }
+  }
+
+  @override
+  void dispose() {
+    idEditingController.dispose();
+    super.dispose();
   }
 
   @override
@@ -102,7 +125,8 @@ class _RegisterIDSectionState extends State<RegisterIDSection> {
         SizedBox(height: widget.heightOfSizedBoxBetweenLabelAndField),
         RegisterIDField(
           formKey: _idFieldFormKey,
-          validateMessage: validateMessage,
+          validateMessage: idValidateMessage,
+          validateColor: idValidateMSGColor,
           isFieldEnabled: isIDFieldEnabled,
           idEditingController: idEditingController,
           onChanged: enableIDCheckButton,
@@ -111,6 +135,7 @@ class _RegisterIDSectionState extends State<RegisterIDSection> {
         ),
         SizedBox(height: widget.heightOfSizedBoxBetweenSubSection),
         RegisterIDCheckButton(
+          formKey: _idFieldFormKey,
           validate: validateID,
           isButtonEnabled: isIDCheckButtonEnabled,
         ),
