@@ -10,6 +10,7 @@ class RegisterIDController extends GetxController {
   // 회원가입 페이지에서 필요한 필드가 모두 검증됐는지 확인하기 위한 변수
   // 아이디가 중복되지 않음이 검증됐는지
   final Rx<bool> _isIDValidated = false.obs;
+  get isIDValidated => _isIDValidated.value;
   set isIDValidated(value) => _isIDValidated.value = value;
 
   // 서버 통신 중 아이디 입력 필드를 비활성화하기 위한 변수

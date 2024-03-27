@@ -9,12 +9,13 @@ import 'package:hojung/app/view/widgets/register_page/register_pwd_section/regis
 class RegisterPwdSection extends StatelessWidget {
   RegisterPwdSection({
     super.key,
+    required this.pwdEditingController,
     required this.labelPadding,
     required this.heightOfSizedBoxBetweenLabelAndField,
     required this.heightOfSizedBoxBetweenSubSection,
   });
 
-  final TextEditingController pwdEditingController = TextEditingController();
+  final TextEditingController pwdEditingController;
   final TextEditingController pwdConfirmEditingController =
       TextEditingController();
 
@@ -24,7 +25,6 @@ class RegisterPwdSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(RegisterPwdController());
     return Column(
       children: [
         RegisterPwdInputSubSection(

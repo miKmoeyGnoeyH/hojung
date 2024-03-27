@@ -11,22 +11,21 @@ import 'package:flutter/material.dart';
 class RegisterIDSection extends StatelessWidget {
   RegisterIDSection({
     super.key,
+    required this.idEditingController,
     required this.labelPadding,
     required this.heightOfSizedBoxBetweenLabelAndField,
     required this.heightOfSizedBoxBetweenSubSection,
   });
 
+  final TextEditingController idEditingController;
+  final GlobalKey<FormState> _idFieldFormKey = GlobalKey<FormState>();
+
   final double labelPadding;
   final double heightOfSizedBoxBetweenLabelAndField;
   final double heightOfSizedBoxBetweenSubSection;
 
-  final TextEditingController idEditingController = TextEditingController();
-  final GlobalKey<FormState> _idFieldFormKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
-    Get.put(RegisterIDController());
-
     return GestureDetector(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

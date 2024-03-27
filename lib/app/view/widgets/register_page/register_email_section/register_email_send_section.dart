@@ -1,26 +1,24 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:hojung/app/controllers/register_send_email_controller.dart';
+import 'package:hojung/app/controllers/register_email_validation_controller.dart';
 
 class RegisterSendEmailSection extends StatelessWidget {
-  RegisterSendEmailSection({
+  const RegisterSendEmailSection({
     super.key,
+    required this.emailEditingController,
     required this.labelPadding,
     required this.heightOfSizedBoxBetweenLabelAndField,
     required this.heightOfSizedBoxBetweenSubSection,
   });
 
-  final TextEditingController emailEditingController = TextEditingController();
+  final TextEditingController emailEditingController;
   final double labelPadding;
   final double heightOfSizedBoxBetweenLabelAndField;
   final double heightOfSizedBoxBetweenSubSection;
 
   @override
   Widget build(BuildContext context) {
-    Get.put(RegisterEmailController());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -49,13 +47,14 @@ class RegisterEmailField extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetX<RegisterEmailController>(
       builder: (controller) => TextFormField(
+        scrollPadding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.25),
         enabled: controller.isEmailFieldEnabled,
         inputFormatters: [
           FilteringTextInputFormatter(RegExp('[0-9]'), allow: true),
         ],
         controller: emailEditingController,
         textAlign: TextAlign.start,
-        maxLength: controller.maxLength,
+        maxLength: controller.maxEmailLength,
         validator: (value) => controller.emailFieldMessage,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         onChanged: (email) => controller.onEmailFieldChange(email),
@@ -110,6 +109,11 @@ class RegisterEmailField extends StatelessWidget {
   }
 }
 
+
+
+
+
+
 class RegisterSendEmailButton extends StatelessWidget {
   const RegisterSendEmailButton({
     super.key,
@@ -123,7 +127,7 @@ class RegisterSendEmailButton extends StatelessWidget {
     return GetX<RegisterEmailController>(
       builder: (controller) => GestureDetector(
         onTap: controller.isSendEmailButtonEnabled
-            ? () => controller.validateEmail(emailEditingController.text)
+            ? () => controller.sendValidateEmail(emailEditingController.text)
             : () {},
         child: Container(
           height: 48,
@@ -139,10 +143,12 @@ class RegisterSendEmailButton extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: const Center(
+          child: Center(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0),
-              child: Text('인증메일 발송'),
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Text(controller.isValidating
+                  ? '${controller.maxSeconds ~/ 60}분 이내에 인증을 완료해 주세요. 남은 시간 ${(controller.seconds / 60).toInt()} : ${(controller.seconds % 60).toString().padLeft(2, '0')}'
+                  : '인증메일 발송'),
             ),
           ),
         ),

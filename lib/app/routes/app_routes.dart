@@ -5,4 +5,5 @@ class Routes {
   static const signInPage = '/signIn';
   static const detailsPage = '/detail';
   static const registerPage = '/register';
+  static const registerCompletePage = '/registerComplete';
 }

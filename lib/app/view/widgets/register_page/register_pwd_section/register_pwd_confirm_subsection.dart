@@ -51,6 +51,7 @@ class RegisterPwdConfirmField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      scrollPadding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.25),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) {
         if(value == pwdEditingController.text) {
